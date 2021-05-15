@@ -1,0 +1,28 @@
+.tilt{
+    background: linear-gradient(89deg, rgb(245, 244, 244) 0%, rgb(250, 154, 45) 100%);
+}
+
+.parallax-effect {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* width: 300px;
+    height: 300px; */
+    /* background-color: darkgreen; */
+    color: white;
+    border-radius: 20px;
+  
+    transform-style: preserve-3d;
+
+  }
+
+  .inner-element {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-style: italic;
+    color: white;
+    transform: translateZ(60px);
+  }
