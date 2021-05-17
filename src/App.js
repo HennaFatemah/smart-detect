@@ -31,7 +31,12 @@ class App extends Component {
       input: '',
       imageUrl: '',
       box: {},
+      route: 'signin'
     }
+  }
+
+  onRouteChange = (route) => {
+    this.setState({ route })
   }
 
   calculateFaceDetection = (data) => {
@@ -74,18 +79,31 @@ class App extends Component {
           params={particlesOptions}
           className="fixed top-0 bottom-0 left-0 right-0 z-10"
         />
-        <Signin/>
-        <Navigation/>
-        <Logo/>
-        <Rank/>
-        <ImageLinkForm
-          onInputChange = {this.onInputChange}
-          onButtonSubmit={this.onButtonSubmit}
+        <Navigation
+          onRouteChange={this.onRouteChange}
         />
-        <FaceRecognition
-          imageUrl={this.state.imageUrl}
-          box = {this.state.box}
-        />
+        {
+          this.state.route === 'signin'
+          ? 
+          <>
+            <Signin
+              onRouteChange={this.onRouteChange}
+            />
+          </>
+          :
+          <>
+            <Logo/>
+            <Rank/>
+            <ImageLinkForm
+              onInputChange = {this.onInputChange}
+              onButtonSubmit={this.onButtonSubmit}
+            />
+            <FaceRecognition
+              imageUrl={this.state.imageUrl}
+              box = {this.state.box}
+            />
+          </>
+        }
       </div>
     );
   }
