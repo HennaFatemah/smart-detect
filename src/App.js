@@ -8,6 +8,7 @@ import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
 import './App.css';
 import Signin from './components/Signin/Signin';
+import Register from './components/Register/Register';
 
 const app = new Clarifai.App({
   apiKey: 'daf193fdb8a54794b9a4ddd62aafcc9d',
@@ -31,11 +32,17 @@ class App extends Component {
       input: '',
       imageUrl: '',
       box: {},
-      route: 'signin'
+      route: 'signin',
+      isSignedIn: false,
     }
   }
 
   onRouteChange = (route) => {
+    if(route === 'signout') {
+      this.setState({ isSignedIn: false })
+    } else if (route === 'home') {
+      this.setState({ isSignedIn: true })
+    }
     this.setState({ route })
   }
 
@@ -73,6 +80,8 @@ class App extends Component {
   }
 
   render() {
+    const { isSignedIn, route, imageUrl, box } = this.state;
+    const { onRouteChange, onInputChange, onButtonSubmit } = this;
     return (
       <div>
         <Particles 
@@ -80,14 +89,23 @@ class App extends Component {
           className="fixed top-0 bottom-0 left-0 right-0 z-10"
         />
         <Navigation
-          onRouteChange={this.onRouteChange}
+          onRouteChange={onRouteChange}
+          isSignedIn={isSignedIn}
         />
         {
-          this.state.route === 'signin'
+          route === 'signin' || route === 'signout'
           ? 
           <>
             <Signin
-              onRouteChange={this.onRouteChange}
+              onRouteChange={onRouteChange}
+            />
+          </>
+          :
+          route === 'register'
+          ?
+          <>
+            <Register
+              onRouteChange={onRouteChange}
             />
           </>
           :
@@ -95,12 +113,12 @@ class App extends Component {
             <Logo/>
             <Rank/>
             <ImageLinkForm
-              onInputChange = {this.onInputChange}
-              onButtonSubmit={this.onButtonSubmit}
+              onInputChange = {onInputChange}
+              onButtonSubmit={onButtonSubmit}
             />
             <FaceRecognition
-              imageUrl={this.state.imageUrl}
-              box = {this.state.box}
+              imageUrl={imageUrl}
+              box = {box}
             />
           </>
         }
