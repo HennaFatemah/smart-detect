@@ -34,6 +34,13 @@ class App extends Component {
       box: {},
       route: 'signin',
       isSignedIn: false,
+      user: {
+        id:'',
+        name:'',
+        email:'',
+        entries: 0,
+        joined: ''
+      }
     }
   }
 
@@ -68,20 +75,45 @@ class App extends Component {
     this.setState({ input: e.target.value })
   }
 
-  onButtonSubmit = () => {
+  onImageSubmit = () => {
     this.setState({imageUrl: this.state.input})
     app.models
     .predict(
       Clarifai.FACE_DETECT_MODEL,
       this.state.input
     )
-    .then(response => this.displayFaceBox(this.calculateFaceDetection(response)))
+    .then(response => {
+      if(response){
+        fetch('http://localhost:3000/image', {
+          method: 'put',
+          headers: {'Content-Type':'Application/json'},
+          body: JSON.stringify({
+            id: this.state.user.id
+          })
+        })
+          .then(response => response.json())
+          .then(count => {
+            this.setState(Object.assign(this.state.user, { entries:count }))
+          })
+      }
+      this.displayFaceBox(this.calculateFaceDetection(response))
+    })
     .catch(err => console.log(err));
+  }
+
+  loadUser = (data) => {
+    this.setState({user: {
+      id: data.id,
+      name:data.name,
+      email:data.email,
+      entries: data.entries,
+      joined: data.joined,
+    }})
   }
 
   render() {
     const { isSignedIn, route, imageUrl, box } = this.state;
-    const { onRouteChange, onInputChange, onButtonSubmit } = this;
+    const { onRouteChange, onInputChange, onImageSubmit, loadUser } = this;
     return (
       <div>
         <Particles 
@@ -97,7 +129,8 @@ class App extends Component {
           ? 
           <>
             <Signin
-              onRouteChange={onRouteChange}
+              onRouteChange={ onRouteChange }
+              loadUser={ loadUser }
             />
           </>
           :
@@ -105,16 +138,20 @@ class App extends Component {
           ?
           <>
             <Register
-              onRouteChange={onRouteChange}
+              onRouteChange={ onRouteChange }
+              loadUser={ loadUser }
             />
           </>
           :
           <>
             <Logo/>
-            <Rank/>
+            <Rank
+              name={this.state.user.name}
+              entries={this.state.user.entries}
+            />
             <ImageLinkForm
               onInputChange = {onInputChange}
-              onButtonSubmit={onButtonSubmit}
+              onImageSubmit={onImageSubmit}
             />
             <FaceRecognition
               imageUrl={imageUrl}
