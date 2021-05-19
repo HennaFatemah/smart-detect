@@ -1,7 +1,28 @@
 import React, { Component } from 'react';
 
 class Signin extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            signinEmail: '',
+            signinPassword: '',
+        }
+    }
+    onEmailChange = (e) => {
+        this.setState({ signinEmail: e.target.value })
+    }
+
+    onPasswordChange = (e) => {
+        this.setState({ signinPassword: e.target.value })
+    }
+
+    onSubmitSignin = () => {
+        console.log(this.state);
+        this.props.onRouteChange('home')
+    }
+
     render() {
+        const { onRouteChange } = this.props;
         return (
             <div className="relative z13 br3 ba pa3 dark-gray b--black-10 mv4 w-100 w-50-m mw6 shadow-5 w-25-l mw-5 flex justify-center items-center center">
                 <div className="measure tc">
@@ -17,6 +38,7 @@ class Signin extends Component {
                                 type="email" 
                                 name="email-address"  
                                 id="email-address"
+                                onChange={this.onEmailChange}
                             />
                         </div>
                         <div className="mv3">
@@ -29,12 +51,13 @@ class Signin extends Component {
                                 type="password" 
                                 name="password"  
                                 id="password"
+                                onChange={this.onPasswordChange}
                             />
                         </div>
                     </fieldset>
                     <div className="relative z20">
                         <input
-                            onClick={() => onRouteChange('home')}
+                            onClick={this.onSubmitSignin}
                             className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
                             type="submit" 
                             value="Sign in"
