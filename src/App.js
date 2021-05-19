@@ -114,7 +114,8 @@ class App extends Component {
           ? 
           <>
             <Signin
-              onRouteChange={onRouteChange}
+              onRouteChange={ onRouteChange }
+              loadUser={ loadUser }
             />
           </>
           :
@@ -122,14 +123,17 @@ class App extends Component {
           ?
           <>
             <Register
-              onRouteChange={onRouteChange}
+              onRouteChange={ onRouteChange }
               loadUser={ loadUser }
             />
           </>
           :
           <>
             <Logo/>
-            <Rank/>
+            <Rank
+              name={this.state.user.name}
+              entries={this.state.iser.entries}
+            />
             <ImageLinkForm
               onInputChange = {onInputChange}
               onButtonSubmit={onButtonSubmit}
