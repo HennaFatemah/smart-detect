@@ -34,6 +34,13 @@ class App extends Component {
       box: {},
       route: 'signin',
       isSignedIn: false,
+      user: {
+        id:'',
+        name:'',
+        email:'',
+        entries: 0,
+        joined: ''
+      }
     }
   }
 
@@ -79,9 +86,19 @@ class App extends Component {
     .catch(err => console.log(err));
   }
 
+  loadUser = (data) => {
+    this.setState({user: {
+      id: data.id,
+      name:data.name,
+      email:data.email,
+      entries: data.entries,
+      joined: data.joined,
+    }})
+  }
+
   render() {
     const { isSignedIn, route, imageUrl, box } = this.state;
-    const { onRouteChange, onInputChange, onButtonSubmit } = this;
+    const { onRouteChange, onInputChange, onButtonSubmit, loadUser } = this;
     return (
       <div>
         <Particles 
@@ -106,6 +123,7 @@ class App extends Component {
           <>
             <Register
               onRouteChange={onRouteChange}
+              loadUser={ loadUser }
             />
           </>
           :
