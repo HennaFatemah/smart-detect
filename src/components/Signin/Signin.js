@@ -62,7 +62,7 @@ class Signin extends Component {
                     <div className="lh-copy mt3">
                         <p onClick={() => onRouteChange('register')} className="f6 link dim black db pointer">Register</p>
                     </div>
-                    {this.state.incorrectSignin ? <p>Incorrect Email or Password</p> : null}
+                    {this.state.incorrectSignin ? <p className="db fw6 lh-copy f6">Incorrect Email or Password</p> : null}
                 </div>
             </div>
         );
