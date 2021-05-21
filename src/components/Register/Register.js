@@ -25,15 +25,17 @@ class Register extends Component {
 
     onSubmitSignin = () => {
         //error checking
-    if (!this.state.name || this.state.name.trim().length <= 0) {
-        return false;
-    }
-    if (!this.state.email || this.state.email.trim().length <= 0) {
-        return false;
-    }
-    if (!this.state.password || this.state.password.trim().length <= 0) {
-        return false;
-    }
+        if (!this.state.name || this.state.name.trim().length <= 0) {
+            return false;
+        }
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const testEmail = re.test(String(this.state.email).toLowerCase());
+        if (!testEmail || testEmail.trim().length <= 0) {
+            return false;
+        }
+        if (!this.state.password || this.state.password.trim().length <= 0) {
+            return false;
+        }
         const { onRouteChange, loadUser } = this.props;
         fetch('http://localhost:3000/register', {
             method: 'post',
