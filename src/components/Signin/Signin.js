@@ -7,6 +7,7 @@ class Signin extends Component {
         this.state = {
             email: '',
             password: '',
+            incorrectSignin: false,
         }
     }
     onEmailChange = (e) => {
@@ -31,6 +32,8 @@ class Signin extends Component {
                 if(user.id) {
                     this.props.loadUser(user)
                     this.props.onRouteChange('home')
+                } else {
+                    this.setState({ incorrectSignin:true })
                 }
             })
         
@@ -59,6 +62,7 @@ class Signin extends Component {
                     <div className="lh-copy mt3">
                         <p onClick={() => onRouteChange('register')} className="f6 link dim black db pointer">Register</p>
                     </div>
+                    {this.state.incorrectSignin ? <p>Incorrect Email or Password</p> : null}
                 </div>
             </div>
         );
