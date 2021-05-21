@@ -24,6 +24,16 @@ class Register extends Component {
     }
 
     onSubmitSignin = () => {
+        //error checking
+    if (!this.state.name || this.state.name.trim().length <= 0) {
+        return false;
+    }
+    if (!this.state.email || this.state.email.trim().length <= 0) {
+        return false;
+    }
+    if (!this.state.password || this.state.password.trim().length <= 0) {
+        return false;
+    }
         const { onRouteChange, loadUser } = this.props;
         fetch('http://localhost:3000/register', {
             method: 'post',
@@ -36,7 +46,7 @@ class Register extends Component {
         })
             .then(response => response.json())
             .then(user => {
-                if(user){
+                if(user.id){
                     loadUser(user)
                     onRouteChange('home')
                 }
