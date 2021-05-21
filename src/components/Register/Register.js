@@ -25,15 +25,15 @@ class Register extends Component {
 
     onSubmitSignin = () => {
         //error checking
-        if (!this.state.name || this.state.name.trim().length <= 0) {
+        if (!this.state.name || this.state.name.length <= 0) {
             return false;
         }
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         const testEmail = re.test(String(this.state.email).toLowerCase());
-        if (!testEmail || testEmail.trim().length <= 0) {
+        if (!testEmail || testEmail.length <= 0) {
             return false;
         }
-        if (!this.state.password || this.state.password.trim().length <= 0) {
+        if (!this.state.password || this.state.password.length <= 0) {
             return false;
         }
         const { onRouteChange, loadUser } = this.props;
@@ -60,7 +60,7 @@ class Register extends Component {
         return (
             <article className="br3 ba pa3 dark-gray b--black-10 mv4 w-100 w-50-m mw6 shadow-5 w-25-l mw-5 flex justify-center items-center center tc relative z20">
                 <div action="sign-up_submit" method="get" acceptCharset="utf-8">
-                    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
+                    <fieldset className="ba b--transparent ph0 mh0">
                     <legend className="f3 fw6 ph0 mh0">Register</legend>
                     <div className="mt3">
                         <label className="db fw6 lh-copy f6" htmlFor="name">Name</label>
