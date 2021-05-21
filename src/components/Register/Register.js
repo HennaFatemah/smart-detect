@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
+import Form from '../Form/Form';
 
 class Register extends Component {
     constructor(props){
         super(props);
         this.state = {
-            registerName: '',
-            registerEmail: '',
-            registerPassword: '',
+            name: '',
+            email: '',
+            password: '',
         }
     }
 
     onNameChange = (e) => {
-        this.setState({ registerName: e.target.value })
+        this.setState({ name: e.target.value })
     }
 
     onEmailChange = (e) => {
-        this.setState({ registerEmail: e.target.value })
+        this.setState({ email: e.target.value })
     }
 
     onPasswordChange = (e) => {
-        this.setState({ registerPassword: e.target.value })
+        this.setState({ password: e.target.value })
     }
 
     onSubmitSignin = () => {
@@ -28,9 +29,9 @@ class Register extends Component {
             method: 'post',
             headers: {'Content-Type': 'Application/json'},
             body: JSON.stringify({
-                name: this.state.registerName,
-                email: this.state.registerEmail,
-                password: this.state.registerPassword,
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password,
             })
         })
             .then(response => response.json())
@@ -59,26 +60,10 @@ class Register extends Component {
                             onChange={this.onNameChange}
                         />
                     </div>
-                    <div className="mt3">
-                        <label className="db fw4 lh-copy f6" htmlFor="email-address">Email address</label>
-                        <input 
-                            className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
-                            type="email" 
-                            name="email-address"  
-                            id="email-address"
-                            onChange={this.onEmailChange}
-                        />
-                    </div>
-                    <div className="mt3">
-                        <label className="db fw4 lh-copy f6" htmlFor="password">Password</label>
-                        <input 
-                            className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
-                            type="password" 
-                            name="password"  
-                            id="password"
-                            onChange={this.onPasswordChange}
-                        />
-                    </div>
+                    <Form
+                        onEmailChange={this.onEmailChange}
+                        onPasswordChange={this.onPasswordChange}
+                    />
                     </fieldset>
                     <div className="mt3">
                         <input
