@@ -10,9 +10,7 @@ import './App.css';
 import Signin from '../components/Signin/Signin';
 import Register from '../components/Register/Register';
 
-const app = new Clarifai.App({
-  apiKey: 'daf193fdb8a54794b9a4ddd62aafcc9d',
-});
+
 
 const particlesOptions = {
   particles: {
@@ -79,11 +77,14 @@ class App extends Component {
 
   onImageSubmit = () => {
     this.setState({imageUrl: this.state.input})
-    app.models
-    .predict(
-      Clarifai.FACE_DETECT_MODEL,
-      this.state.input
-    )
+    fetch('http://localhost:3000/imageurl', {
+      method: 'post',
+      headers: {'Content-Type':'Application/json'},
+      body: JSON.stringify({
+        input: this.state.input
+      })
+    })
+    .then(response => response.json())
     .then(response => {
       if(response){
         fetch('http://localhost:3000/image', {
