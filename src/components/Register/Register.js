@@ -37,7 +37,7 @@ class Register extends Component {
             return false;
         }
         const { onRouteChange, loadUser } = this.props;
-        fetch('http://localhost:3000/register', {
+        fetch('https://secret-falls-92473.herokuapp.com/register', {
             method: 'post',
             headers: {'Content-Type': 'Application/json'},
             body: JSON.stringify({

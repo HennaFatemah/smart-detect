@@ -77,7 +77,7 @@ class App extends Component {
 
   onImageSubmit = () => {
     this.setState({imageUrl: this.state.input})
-    fetch('http://localhost:3000/imageurl', {
+    fetch('https://secret-falls-92473.herokuapp.com/imageurl', {
       method: 'post',
       headers: {'Content-Type':'Application/json'},
       body: JSON.stringify({
@@ -87,7 +87,7 @@ class App extends Component {
     .then(response => response.json())
     .then(response => {
       if(response){
-        fetch('http://localhost:3000/image', {
+        fetch('https://secret-falls-92473.herokuapp.com/image', {
           method: 'put',
           headers: {'Content-Type':'Application/json'},
           body: JSON.stringify({
